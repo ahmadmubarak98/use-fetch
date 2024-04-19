@@ -1,0 +1,1 @@
+[![publish npm](https://github.com/ahmadmubarak98/use-fetch/actions/workflows/npm-publish.yml/badge.svg?branch=main)](https://github.com/ahmadmubarak98/use-fetch/actions/workflows/npm-publish.yml)
