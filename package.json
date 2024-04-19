@@ -12,7 +12,7 @@
     "/dist"
   ],
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/@ahmadmubarak98"
+    "registry": "https://registry.npmjs.org/@ahmadmubarak98"
   },
   "scripts": {
     "format": "prettier --write --parser typescript '**/*.{ts,tsx}'",
