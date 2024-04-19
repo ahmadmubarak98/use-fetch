@@ -1,9 +1,19 @@
 {
   "name": "@ahmadmubarak98/use-fetch",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "author": "@ahmadmubarak98",
   "license": "MIT",
   "description": "A custom hook for fetching data",
+  "keywords": [
+    "react",
+    "fetch",
+    "hook",
+    "hooks",
+    "data",
+    "react-native",
+    "data-fetching",
+    "use-fetch"
+  ],
   "type": "module",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
