@@ -2,7 +2,8 @@ name: publish on github
 
 on:
   release:
-    types: [published]
+    types:
+      - created
 
 jobs:
   publish-gpr:
