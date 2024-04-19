@@ -1,5 +1,5 @@
 import { useFetch } from './use-fetch';
-import { FetchOptions, UseFetchProps, FetchResult } from './types';
+import { FetchOptions, UseFetchProps, FetchResult } from '../types';
 
 export interface UsePostRequestProps extends Omit<UseFetchProps, 'method'> {}
 
