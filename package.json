@@ -1,6 +1,6 @@
 {
   "name": "@ahmadmubarak98/use-fetch",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "@ahmadmubarak98",
   "license": "MIT",
   "description": "A custom hook for fetching data",
@@ -11,6 +11,10 @@
   "files": [
     "/dist"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ahmadmubarak98/use-fetch.git"
+  },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
@@ -64,5 +68,8 @@
     "vite-plugin-dts": "^3.8.3",
     "vitest": "^1.5.0",
     "vitest-fetch-mock": "^0.2.2"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0"
   }
 }
