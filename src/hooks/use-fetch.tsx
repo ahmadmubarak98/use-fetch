@@ -1,5 +1,5 @@
-import { fetcher as defaultFetcherFnc } from '../utils/fetcher';
-import { useEffect, useReducer } from 'react';
+import { fetcher as defaultFetcherFnc } from "../utils/fetcher";
+import { useEffect, useReducer } from "react";
 import {
   Action,
   Cache,
@@ -8,14 +8,14 @@ import {
   FetchResult,
   State,
   TriggerOptions,
-} from '../types';
+} from "../types";
 
 const cache: Cache = {};
 
 export const defaultOptions: FetchOptions = {
-  method: 'GET',
+  method: "GET",
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
   fetchOnMount: true,
   cache: 0,
@@ -24,9 +24,9 @@ export const defaultOptions: FetchOptions = {
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
-    case 'FETCH_INIT':
+    case "FETCH_INIT":
       return { ...state, isLoading: true, error: null };
-    case 'FETCH_SUCCESS':
+    case "FETCH_SUCCESS":
       return {
         ...state,
         isLoading: false,
@@ -34,7 +34,7 @@ function reducer(state: State, action: Action): State {
         time: action.time,
         error: null,
       };
-    case 'FETCH_FAILURE':
+    case "FETCH_FAILURE":
       return {
         ...state,
         isLoading: false,
@@ -42,7 +42,7 @@ function reducer(state: State, action: Action): State {
         time: action.time,
       };
     default:
-      throw new Error('Unhandled action type');
+      throw new Error("Unhandled action type");
   }
 }
 
@@ -53,7 +53,7 @@ const initialState: State = {
   time: 0,
 };
 
-export function useFetch(props: UseFetchProps): FetchResult {
+export function useFetch(props: UseFetchProps = {}): FetchResult {
   const { url, options } = props;
   const optionsOverride = {
     ...defaultOptions,
@@ -68,20 +68,24 @@ export function useFetch(props: UseFetchProps): FetchResult {
 
   const trigger = async (triggerOptions?: TriggerOptions): Promise<any> => {
     const {
-      url: triggerUrl = url,
+      url: triggerUrl,
       payload: triggerPayload,
       headers: triggerHeaders,
       onSuccess,
       onError,
-    } = triggerOptions || {};
+      onComplete,
+    } = {
+      ...optionsOverride,
+      ...triggerOptions,
+    } || {};
     const startTime = performance.now();
-    dispatch({ type: 'FETCH_INIT' });
+    dispatch({ type: "FETCH_INIT" });
 
-    const cacheKey = `cache-${optionsOverride.method || 'GET'}-${url}`;
+    const cacheKey = `cache-${optionsOverride.method || "GET"}-${url}`;
 
     try {
       const cachedData =
-        cache[cacheKey] || JSON.parse(localStorage.getItem(cacheKey) || 'null');
+        cache[cacheKey] || JSON.parse(localStorage.getItem(cacheKey) || "null");
       if (
         cachedData &&
         optionsOverride.cache &&
@@ -89,7 +93,7 @@ export function useFetch(props: UseFetchProps): FetchResult {
       ) {
         const duration = performance.now() - startTime;
         dispatch({
-          type: 'FETCH_SUCCESS',
+          type: "FETCH_SUCCESS",
           payload: cachedData.data,
           time: duration,
         });
@@ -102,12 +106,12 @@ export function useFetch(props: UseFetchProps): FetchResult {
       const data: Promise<any> = await fetcherFnc(
         triggerUrl!,
         optionsOverride.method!, // method is guaranteed to be defined, as it is set in defaultOptions
-        triggerPayload || optionsOverride.payload,
-        triggerHeaders || optionsOverride.headers
+        triggerPayload ? triggerPayload : optionsOverride.payload,
+        triggerHeaders ? triggerHeaders : optionsOverride.headers,
       );
 
       const duration = performance.now() - startTime;
-      dispatch({ type: 'FETCH_SUCCESS', payload: data, time: duration });
+      dispatch({ type: "FETCH_SUCCESS", payload: data, time: duration });
 
       if (optionsOverride.cache) {
         cache[cacheKey] = { data, expiry: Date.now() + optionsOverride.cache };
@@ -115,7 +119,10 @@ export function useFetch(props: UseFetchProps): FetchResult {
         if (optionsOverride.persistCache) {
           localStorage.setItem(
             cacheKey,
-            JSON.stringify({ data, expiry: Date.now() + optionsOverride.cache })
+            JSON.stringify({
+              data,
+              expiry: Date.now() + optionsOverride.cache,
+            }),
           );
           setTimeout(() => {
             delete cache[cacheKey];
@@ -127,8 +134,10 @@ export function useFetch(props: UseFetchProps): FetchResult {
       onSuccess?.(data);
     } catch (error) {
       const duration = performance.now() - startTime;
-      dispatch({ type: 'FETCH_FAILURE', payload: error, time: duration });
+      dispatch({ type: "FETCH_FAILURE", payload: error, time: duration });
       onError?.(error);
+    } finally {
+      onComplete?.(state.data);
     }
   };
 

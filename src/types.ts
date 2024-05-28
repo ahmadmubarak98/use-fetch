@@ -34,6 +34,8 @@ export interface TriggerOptions {
   onSuccess?: (data: any) => void;
   /** Callback to be executed on error, it gives the error as argument */
   onError?: (error: any) => void;
+  /** Callback to be executed on completion, it gives the fetched data as argument */
+  onComplete?: (data: any) => void;
 }
 
 export interface FetchResult {

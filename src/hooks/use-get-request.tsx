@@ -10,7 +10,7 @@ const defaultOptions: FetchOptions = {
   persistCache: false,
 };
 
-export function useGetRequest(props: UseGetRequestProps): FetchResult {
+export function useGetRequest(props: UseGetRequestProps = {}): FetchResult {
   const { url, options } = props;
   const optionsOverride = { ...defaultOptions, ...options };
   const { data, error, isLoading, trigger, time } = useFetch({
