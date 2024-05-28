@@ -16,7 +16,7 @@ export const fetcher = async (
 
   if (method === 'GET' && payload) {
     const params = new URLSearchParams(payload);
-    url += '?' + params.toString();
+    url += '?' + params?.toString();
   }
 
   try {

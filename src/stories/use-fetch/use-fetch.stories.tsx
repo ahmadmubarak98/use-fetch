@@ -1,19 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { UseFetchProps } from '../../types';
+import { UseFetchProps } from "../../types";
 import { defaultOptions, useFetch } from "../../hooks/use-fetch";
 
 const Example: React.FC<UseFetchProps> = (props) => {
-  const { isLoading, data } = useFetch(props);
+  const { isLoading, data, error } = useFetch(props);
 
   return (
     <div>
       {isLoading ? "Loading..." : "Data loaded"}
       {JSON.stringify(data)}
+      {JSON.stringify(error)}
     </div>
   );
 };
-
-
 
 const meta: Meta<typeof Example> = {
   title: "hooks/useFetch",
@@ -31,7 +30,7 @@ const meta: Meta<typeof Example> = {
         type: "object",
       },
       description: "Fetch options",
-    }
+    },
   },
   parameters: {
     controls: { expanded: true },

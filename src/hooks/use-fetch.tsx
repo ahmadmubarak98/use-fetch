@@ -77,6 +77,12 @@ export function useFetch(props: UseFetchProps = {}): FetchResult {
     } = {
       ...optionsOverride,
       ...triggerOptions,
+      url: triggerOptions?.url || url,
+      payload: triggerOptions?.payload || optionsOverride.payload,
+      headers: {
+        ...optionsOverride.headers,
+        ...triggerOptions?.headers,
+      },
     } || {};
     const startTime = performance.now();
     dispatch({ type: "FETCH_INIT" });
