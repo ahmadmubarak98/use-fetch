@@ -1,6 +1,6 @@
 {
   "name": "@ahmadmubarak98/use-fetch",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "@ahmadmubarak98",
   "license": "MIT",
   "description": "A custom hook for fetching data",
