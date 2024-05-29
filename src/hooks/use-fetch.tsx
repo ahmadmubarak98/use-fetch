@@ -20,6 +20,8 @@ export const defaultOptions: FetchOptions = {
   fetchOnMount: true,
   cache: 0,
   persistCache: false,
+  initialLoading: true,
+  initialData: null,
 };
 
 function reducer(state: State, action: Action): State {
@@ -63,7 +65,10 @@ export function useFetch(props: UseFetchProps = {}): FetchResult {
 
   const [state, dispatch] = useReducer(reducer, {
     ...initialState,
-    isLoading: !!optionsOverride.fetchOnMount,
+    data: optionsOverride.initialData || null,
+    isLoading: optionsOverride.initialLoading
+      ? optionsOverride.initialLoading
+      : !!optionsOverride.fetchOnMount,
   });
 
   const trigger = async (triggerOptions?: TriggerOptions): Promise<any> => {

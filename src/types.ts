@@ -16,6 +16,10 @@ export type FetchOptions = {
   cache?: number; // in milliseconds
   /** Whether to persist the cache in local storage. Default: false */
   persistCache?: boolean;
+  /** Initial Loading state. Default: true */
+  initialLoading?: boolean;
+  /** Initial data. Default: null */
+  initialData?: any;
 };
 
 export interface UseFetchProps {
