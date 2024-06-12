@@ -143,6 +143,7 @@ export function useFetch(props: UseFetchProps = {}): FetchResult {
       }
 
       onSuccess?.(data);
+      return data;
     } catch (error) {
       const duration = performance.now() - startTime;
       dispatch({ type: "FETCH_FAILURE", payload: error, time: duration });
